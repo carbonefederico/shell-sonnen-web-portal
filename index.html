@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Sonnen</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <script
+      type="text/javascript"
+      src="https://sdk.singularkey.com/latest/singularkey.js"
+    ></script>
+
+    <script>
+      let token;
+      let skWidget;
+      let idTokenClaims;
+
+      var sess = CreateGuid();
+
+      function CreateGuid() {
+        function _p8(s) {
+          var p = (Math.random().toString(16) + "000000000").substr(2, 8);
+          return s ? "-" + p.substr(0, 4) + "-" + p.substr(4, 4) : p;
+        }
+        return _p8() + _p8(true) + _p8(true) + _p8();
+      }
+
+      window.addEventListener("load", (event) => {
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("continueToken")) {
+          // flush parameter from window url
+          window.history.pushState(
+            {},
+            document.title,
+            window.location.pathname
+          );
+          continueWidget(
+            "9bb89d59ba8a41b2711172ae2121f1be",
+            "widget",
+            urlParams.get("continueToken")
+          );
+        }
+      });
+
+      /**
+       * Re-creates an instance of the widget placed on the page
+       * Uses the provided `continueToken` parameter value instead of fetching a new one from SK
+       * @param {string} policyId - The FlowID for the widget to run
+       * @param {string} divId - Where on the page to place the widget
+       * @param {string} continueToken - value of the `continueToken` query parameter
+       */
+      function continueWidget(policyId, divId, continueToken) {
+        /**
+         * Creates an instance of the widget with the following
+         * @param {object} props - properties for the widget execution
+         * @param {object} props.config - object containing the widget config
+         * @param {string} props.config.method - Widget run method - { "runFlow" | "continueFlow" }
+         * @param {string} props.config.apiRoot - URL of the SK Instance for this Flow
+         * @param {string} props.config.accessToken - @param {string} continueToken
+         * @param {string} props.config.companyId - skCompanyId that contains the Flow
+         * @param {string} props.config.policyId - PolicyId for the widget to run (can be replaced with `flowId`)
+         * @param {boolean} props.useModal - Present widget as a modal instead of embedded
+         * @param {requestCallback} props.successCallback - The callback that handles the Success response
+         * @param {requestCallback} props.errorCallback - The callback that handles the Error response
+         * @param {requestCallback} props.onCloseModal - The callback that handles the modal close response (`useModal` == true)
+         */
+        var props = {
+          config: {
+            method: "continueFlow", // <-- NEW
+            apiRoot: "https://api.singularkey.com/v1",
+            accessToken: continueToken, // <-- NEW
+            companyId: "5e93a255-3070-4e7d-8f0b-3736eece7bbf",
+            policyId: policyId,
+          },
+          useModal: false,
+          successCallback,
+          errorCallback,
+          onCloseModal,
+        };
+        /*** Invoke Singular Key Widget ****/
+        singularkey.skRenderScreen(document.getElementById(divId), props);
+        function successCallback(response) {
+          console.log("successCallback");
+          singularkey.cleanup(document.getElementById("widget"));
+          let decodedToken = decodeJWT(response.id_token);
+          idTokenClaims = decodedToken.payload;
+          console.log(idTokenClaims);
+          updateUI(true);
+        }
+
+        function errorCallback(error) {
+          console.log(error);
+        }
+
+        function onCloseModal() {
+          console.log("onCloseModal");
+        }
+      }
+
+      function loadwidget(policyId) {
+        const skApiBaseUrl = "https://api.singularkey.com/v1";
+        const companyId = "cbe83512-3062-4ec9-bb35-1b6abc351173";
+        const skApiKey =
+          "6d2b4bb3582125f9704d0c3f5450fe2f9853c7f29be824fea57a7c1e1dda0d5bd6bd039bececf9cd28a66e6ef0e0b69a3749ed90d9aeb8cdc2cbd933a08c4bf0ec579cfae5ceccd48ea38d98540826d9d99e4b3655059224e089809a160b92fc0d3dd12cf922b9274e1d91e49ab0c16033c9c61083b237672d860af6d19ae2ec";
+        //const policyId = "Eg1BOvckmgCAa04uCLDAZNhq5cFzbYKg";
+
+        /*** Build the get PingOrchesetrate Token URL. ***/
+        const skGetTokenUrl =
+          skApiBaseUrl + "/company/" + companyId + "/sdkToken";
+
+        //*** Add the API Key from your PingOrchesetrate Application. ***/
+        var headers = new Headers();
+        headers.append("X-SK-API-KEY", skApiKey);
+
+        var requestOptions = {
+          method: "GET",
+          headers: headers,
+          redirect: "follow",
+        };
+
+        /*** Retrieve PingOrchestrate Token ***/
+        fetch(skGetTokenUrl, requestOptions)
+          .then((response) => response.json())
+          .then((responseData) => {
+            var props = {
+              config: {
+                method: "runFlow",
+                apiRoot: skApiBaseUrl,
+                accessToken: responseData.access_token,
+                companyId: companyId,
+                policyId: policyId,
+              },
+              useModal: true,
+              successCallback,
+              errorCallback,
+              onCloseModal,
+            };
+            /*** Invoke PingOrchestrate Widget ****/
+            console.log(props);
+            singularkey.skRenderScreen(
+              document.getElementById("widget"),
+              props
+            );
+          })
+          .catch((error) => console.log("error", error));
+
+        function successCallback(response) {
+          console.log("successCallback");
+          singularkey.cleanup(document.getElementById("widget"));
+          let decodedToken = decodeJWT(response.id_token);
+          idTokenClaims = decodedToken.payload;
+          console.log(idTokenClaims);
+          updateUI(true);
+        }
+
+        function errorCallback(error) {
+          console.log(error);
+        }
+
+        function onCloseModal() {
+          console.log("onCloseModal");
+        }
+      }
+
+      function decodeJWT(Jwt) {
+        let parts = Jwt.split(".");
+        let header;
+        let payload;
+
+        if (parts.length !== 3) {
+          throw new Error("Malformed JWT");
+        }
+
+        header = JSON.parse(this.base64urlDecodeStr(parts[0]));
+        payload = JSON.parse(this.base64urlDecodeStr(parts[1]));
+
+        return {
+          header: header,
+          payload: payload,
+          encoded: {
+            header: parts[0],
+            payload: parts[1],
+            signature: parts[2],
+          },
+        };
+      }
+
+      function base64urlDecodeStr(str) {
+        str = str.replace(/-/g, "+").replace(/_/g, "/");
+        return atob(str);
+      }
+
+      function updateUI(isUserAuthenticated) {
+        console.log("updateUI. Is user authenticated " + isUserAuthenticated);
+
+        var links = document.getElementById("links");
+        var loggedIn = document.getElementById("loggedIn");
+        var email = document.getElementById("emailAddress");
+        if (isUserAuthenticated) {
+          if (idTokenClaims.Name != null) {
+            email.textContent = idTokenClaims.Name;
+            document.getElementById("openAccount").style.display = "none";
+          } else {
+            email.textContent = idTokenClaims.email;
+          }
+          links.style.display = "none";
+          loggedIn.style.display = "block";
+        }
+      }
+    </script>
+
+  </head>
+  <!-- <body onload="loadwidget('Eg1BOvckmgCAa04uCLDAZNhq5cFzbYKg')"> -->
+  <body>
+    <div id="header" class="header">
+      <div id="logo">
+  
+       
+      </div>
+ <div id="loggedIn">
+        <span id="emailAddress"></span>
+        
+      </div>
+      <div id="links">
+    
+        <a
+          onclick="loadwidget('0127b5dd391517f586e533211a707a80')"
+          >Login my Sonnen</a>
+      </div>
+    </div>
+    <div id="main">
+      <img
+        src="https://cdn.glitch.global/451bec16-8a7d-4df6-8062-b62dd4674625/sonnen.png?v=1655994437256"
+      />
+  
+
+    </div>
+    <div id="widget" class="skWidget widget"></div>
+   
+  </body>
+</html>

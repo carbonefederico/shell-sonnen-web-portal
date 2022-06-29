@@ -1,0 +1,347 @@
+
+
+
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.reactSingularKey_hftHeader {
+  font-family:Arial, sans-serif;
+  color: #0a1535;
+}
+
+div {
+  margin: 0px;
+}
+
+a {
+  color: #485068;
+  font-family: Arial, sans-serif;
+  line-height: 1.25;
+  cursor: pointer;
+}
+
+#header {
+  width: 1440px;
+  height: 40px;
+  margin: 25px;
+}
+
+#main {
+  width: 1440px;
+  margin: 25px;
+}
+
+#logo {
+  float: left;
+  margin: 25px;
+}
+
+#links {
+  float: right;
+  margin: 25px;
+}
+
+#loggedIn {
+  float: right;
+  display: none;
+  margin: 25px;
+}
+
+.reactSingularKey_hftMain {
+  box-shadow: 0px 0px 3px #ec2600;
+  border: 0px;
+  padding: 100px;
+}
+.widget {
+  margin: 0;
+}
+
+.reactSingularKey_hftFooter {
+  margin: 0px;
+  padding: 0px;
+}
+
+.reactSingularKey_hftButtonContainer {
+  margin: 0px;
+  padding: 0px;
+  text-align: center;
+}
+
+.reactSingularKey_hftNextButton {
+  color: white;
+  background: #ec2600 !important;
+  border: 0px !important;
+  height: 40px;
+  width: 80px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.google_button {
+  color: black;
+  background: #dddddd !important;
+  border: 0px !important;
+  height: 40px;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+.css-11k6vsm {
+  background-color: #ec2600 !important;
+}
+
+.css-17zi2ag {
+  background-color: #ec2600 !important;
+}
+
+.css-139roxj {
+  background-color: #ec2600 !important;
+}
+
+.reactSingularKey_hftNextButton_google {
+  color: white;
+  background: #ec2600;
+  border: 0px;
+  margin: 0px;
+  margin-bottom: 15px;
+}
+
+.reactSingularKey_hftNextButton_fb {
+  color: white;
+  background: #ec2600;
+  border: 0px;
+  margin: 0px;
+  margin-bottom: 15px;
+}
+
+.reactSingularKey_hftNextButton:hover {
+  background: #94c5da !important;
+}
+
+.reactSingularKey_hftNextButton_google:hover {
+  background: #94c5da !important;
+  border: 1px !important;
+}
+
+.reactSingularKey_hftNextButton_fb:hover {
+  background: #94c5da !important;
+  border: 1px !important;
+}
+
+.reactSingularKey_hftPoweredByText {
+  color: transparent;
+}
+
+.reactSingularKey_messageScreenIcon {
+  visibility: hidden;
+}
+
+
+
+
+
+
+
+
+.page {
+	background-color: #000;
+}
+
+#widget {
+	margin: 0 auto;
+		width: 550px;
+}
+
+
+#widgetMain {
+    width: 550px;
+       margin: 0;
+    background-color: #ffffff;
+    color: #000;
+    padding: 3rem 2.4rem;
+	    margin-top: 150px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #0a1535;
+}
+
+#widgetHeader {
+    margin: 0 8px 0 8px;
+    padding: 0;
+    height: 38px;
+    width: 90%;
+}
+#title {
+    float: left;
+    padding-left: 25px;
+    padding-top: 12px;
+    color: #000;
+    font-family: Arial,sans-serif;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 35px;
+  letter-spacing: 0.1em;
+
+}
+
+#contentTile{
+margin: 23px 5px 10px 0.3em;
+padding-left: 25px;
+    padding-top: 12px;
+        font-size: 0.4rem;
+        font-family: Arial,sans-serif !important;
+
+}
+
+.detail{
+
+padding-left: 45px;
+    padding-top: 12px;
+    font-size: 1.1rem;
+  line-height: 14px;
+        font-family: Arial,sans-serif;
+    display: block;
+
+}
+
+.inputFieldContainer{
+
+margin: 23px 5px 2px 0.3em;
+    padding-left: 25px;
+
+    font-size: 0.9em;
+    width: 90%;
+    display: block;
+    font-family: verdana,arial helvetica,arial,sans-serif;
+}
+
+
+.inputFieldError{
+
+margin: 23px 5px 2px 0.3em;
+    padding-left: 25px;
+    font-size: 1.6rem;
+    color: red;
+    display: block;
+    font-family: verdana,arial helvetica,arial,sans-serif;
+}
+
+#buttonsContainer {
+
+    margin: 23px 5px 2px 0.3em;
+    padding-left: 45px;
+
+    width: 90%;
+    display: block;
+    font-family: verdana,arial helvetica,arial,sans-serif;
+        font-size: 0.4rem;
+    letter-spacing: -.01em;
+    height: 2rem;
+}
+
+
+
+input[type=text], input[type=password] {
+    width: 90%;
+    background-color: #EEEEEE;
+    border: 3px solid #444444;
+    outline: none;
+
+    border-radius: 3px;
+    color: #182746;
+    display: block;
+     font-size: 1.1rem;
+  line-height: 14px;
+        font-family:Arial,sans-serif;
+    font-weight: 300;
+    height: 1.2rem;
+    padding: 10px 12px;
+  margin-left: 25px;
+}
+button {
+
+
+
+
+
+
+    height: 2rem;
+    width: 200px;
+    max-width: 100%;
+
+    position: relative;
+
+
+
+
+
+
+    border: 0;
+    cursor: pointer;
+    outline: 0;
+    overflow: visible;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: center;
+  
+      display: inline-block;
+    background: #0a1535;
+    font-size: 0.85rem;
+    padding: 6px 40px 7px;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 10px 0;
+  margin-right:  40px;
+
+}
+
+.button__icon {
+    background: #E18F28;
+    font-size: 3rem;
+    color: #FFF;
+    width: 5rem;
+    height: 5rem;
+    line-height: 5rem;
+    border-radius: 0 3px 3px 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: center;
+}
+
+
+input:focus{
+
+    border-color: #DDDDDD !important;
+}
+
+.rightButton {
+    float: right;
+    width: 150px;
+}
+
+.hiddenButton {
+	display: none;
+}
+
+#widgetBody {
+   margin: 23px 5px 2px;
+    line-height: 25px;
+    display: block;
+}
+
+	    .page__content {
+
+	background-image: url("https://cdn.glitch.global/451bec16-8a7d-4df6-8062-b62dd4674625/sonnen.png?v=1655994437256");
+		background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+	    }
+
+#skWidgetContainer {
+  margin: 0 auto;
+  width: 550px;
+}
